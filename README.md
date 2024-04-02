@@ -13,6 +13,6 @@ Encapsulate common functions as project internal libraries. Those tools can be u
 
 ## cuver module
 
-The module defines the functions that generate the curves.
-Function name is the curve name.
-Using Curve name in function arguments list means argment-curve is depended by function curve.
+The module defines the functions that generate the curves.  
+Function name is the curve name.  
+Using Curve name in function arguments list means argment-curve is depended by function curve.  
