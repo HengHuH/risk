@@ -56,6 +56,14 @@ class DAG:
             if vtx not in self._vertices:
                 raise ValueError(f"vertex {vtx} does not belong to DAG.")
 
+    def _has_path_to(self, v_from, v_to):
+        if v_from == v_to:
+            return True
+        for vtx in self.get_depend(v_from):
+            if self._has_path_to(vtx, v_to):
+                return True
+        return False
+
     def add_vertex(self, vertex):
         self._vertices.append(vertex)
 
@@ -64,7 +72,10 @@ class DAG:
 
     def add_edge(self, v_from, *v_tos):
         self._valid_vertex(v_from, *v_tos)
+
         for v_to in v_tos:
+            if self._has_path_to(v_to, v_from):
+                raise RuntimeError('The edge will create a cycle.')
             self._edges.append((v_from, v_to))
             self._depend[v_from] = self._depend.setdefault(v_from, []) + [v_to]
             self._depended[v_to] = self._depended.setdefault(v_to, []) + [v_from]
@@ -72,11 +83,11 @@ class DAG:
     def get_depended(self, vertex):
         return self._depended.get(vertex, [])
 
-    def get_predecessors(self, vertex):
+    def get_depend(self, vertex):
         return self._depend.get(vertex, [])
 
     def indegree(self, vertex):
-        return len(self.get_predecessors(vertex))
+        return len(self.get_depend(vertex))
 
     def all_starts(self):
         res = []
@@ -106,7 +117,7 @@ class Expander:
             vtx = zero_indgrees.pop(0)
             # use predecessors as arguments
             deps = get_deps(vtx)
-            pres = self.dag.get_predecessors(vtx)
+            pres = self.dag.get_depend(vtx)
             assert len(deps) == len(
                 pres
             ), f"deps: {deps} and pres: {pres} should be the same."

@@ -50,3 +50,8 @@ def c11(c1, c3):
 @reg_node
 def c12(c2, c4):
     return [2 * x + lerp(x, y, 0.2) for x, y in zip(c2, c4)]
+
+
+@reg_node
+def c13(c11, c12):
+    return [1] * 200

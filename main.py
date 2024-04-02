@@ -9,8 +9,10 @@ import curve
 def main():
 
     dag = DAG()
-    for name, nd in all_nodes().items():
+    for name in all_nodes().keys():
         dag.add_vertex(name)
+
+    for name, nd in all_nodes().items():
         dag.add_edge(name, *nd["deps"])
 
     expander = Expander(dag)
