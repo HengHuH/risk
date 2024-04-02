@@ -2,6 +2,11 @@
 
 Expands 20 curves sampling data to 5000.
 
+Run
+```
+python3 main.py
+```
+
 ## risk package
 
 Encapsulate common functions as project internal libraries. Those tools can be used in curve generator function.
