@@ -11,7 +11,7 @@ python3 main.py
 
 Encapsulate common functions as project internal libraries. Those tools can be used in curve generator function.
 
-## cuver module
+## curve module
 
 The module defines the functions that generate the curves.  
 Function name is the curve name.  
